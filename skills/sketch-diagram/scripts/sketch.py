@@ -20,6 +20,16 @@ THEMES = {
                       title="#ffffff", roughness=1, bg="#1e3a8a"),
     "pastel": dict(ink="#4b5563", accent="#ec4899", muted="#9ca3af", tint="#fce7f3",
                    title="#7c3aed", roughness=1, bg="#fffbf5"),
+    "signal": dict(ink="#f5f5f5", accent="#ff5722", muted="#a3a3a3", tint=None,
+                   title="#ffffff", roughness=2, bg="#1a1a1a"),
+    "botanical": dict(ink="#e8e4df", accent="#e8b4b8", muted="#9a9590", tint=None,
+                      title="#d4a574", roughness=1, bg="#0f0f0f"),
+    "terminal": dict(ink="#c9d1d9", accent="#39d353", muted="#8b949e", tint=None,
+                     title="#39d353", roughness=0, bg="#0d1117"),
+    "neon": dict(ink="#d1fae5", accent="#ff00aa", muted="#67e8f9", tint=None,
+                 title="#00ffcc", roughness=1, bg="#0a0f1c"),
+    "paper": dict(ink="#1a1a1a", accent="#c41e3a", muted="#7a746c", tint=None,
+                  title="#1a1a1a", roughness=1, bg="#faf9f7"),
 }
 OBSIDIAN_HEADER = """---
 excalidraw-plugin: parsed
