@@ -14,18 +14,27 @@ Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 
 ## Themes
 
+Ten themes in two families. The same drawings work in all of them.
+
+**Hand-drawn** (wobbly strokes, handwriting font)
+
 | Theme | Look |
 |---|---|
-| `ink` | Black on white, one red accent (default) |
+| `paper` | Warm cream, charcoal ink, one crimson accent (default) |
 | `color` | Blue titles, slate text, amber accent, light blue fill |
 | `dark` | Light ink on near-black, soft red accent |
 | `blueprint` | Pale ink on deep blue, yellow accent |
-| `pastel` | Cream paper, violet titles, pink accent |
-| `signal` | Charcoal with a bold orange accent |
-| `botanical` | Near-black, warm gold titles, dusty pink accent |
-| `terminal` | GitHub dark, green accent, clean straight lines |
+| `botanical` | Near-black, gold titles, dusty pink accent |
 | `neon` | Navy, cyan titles, magenta accent |
-| `paper` | Warm cream, charcoal ink, crimson accent |
+
+**Clean** (straight strokes, other fonts, sharp or filled shapes)
+
+| Theme | Look |
+|---|---|
+| `terminal` | GitHub dark, monospace font, green accent |
+| `swiss` | White, black, one red, Helvetica, sharp corners |
+| `notebook` | Cream page, Helvetica, rounded boxes in rotating pastel fills |
+| `voltage` | Electric blue, white, neon yellow, Helvetica |
 
 Ready-made files for every theme are in [`examples/`](examples/). Open any of them in Obsidian with the Excalidraw plugin.
 

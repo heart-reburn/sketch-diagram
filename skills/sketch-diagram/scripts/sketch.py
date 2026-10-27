@@ -1,36 +1,41 @@
-import os
 """Tiny helper for hand-drawn, minimalist Excalidraw diagrams.
 
 Style: black ink on white, one red accent, no filled boxes, rough strokes.
 Usage: from sketch import Sketch; s = Sketch(); s.title(...); s.save_obsidian(path)
 """
 import json
+import os
 
 INK, RED, GREY = "#1e1e1e", "#c92a2a", "#868e96"  # roles: text and lines, the one accent, side notes
 
 # A theme remaps those three roles, so every drawing can be re-skinned with Sketch(theme=...).
 # tint = light fill for boxes and nodes (None means no fill); title = heading colour.
 THEMES = {
-    "ink": dict(ink=INK, accent=RED, muted=GREY, tint=None, title=INK, roughness=2, bg="#ffffff"),
+    # hand-drawn
+    "paper": dict(ink=INK, accent="#c41e3a", muted="#7a746c", tint=None, title=INK, roughness=2, bg="#faf9f7"),
     "color": dict(ink="#374151", accent="#d97706", muted="#6b7280", tint="#dbeafe",
                   title="#1e40af", roughness=1, bg="#ffffff"),
     "dark": dict(ink="#e5e7eb", accent="#f87171", muted="#9ca3af", tint=None,
                  title="#ffffff", roughness=2, bg="#1b1b1f"),
     "blueprint": dict(ink="#e0f2fe", accent="#fde047", muted="#93c5fd", tint=None,
                       title="#ffffff", roughness=1, bg="#1e3a8a"),
-    "pastel": dict(ink="#4b5563", accent="#ec4899", muted="#9ca3af", tint="#fce7f3",
-                   title="#7c3aed", roughness=1, bg="#fffbf5"),
-    "signal": dict(ink="#f5f5f5", accent="#ff5722", muted="#a3a3a3", tint=None,
-                   title="#ffffff", roughness=2, bg="#1a1a1a"),
     "botanical": dict(ink="#e8e4df", accent="#e8b4b8", muted="#9a9590", tint=None,
                       title="#d4a574", roughness=1, bg="#0f0f0f"),
-    "terminal": dict(ink="#c9d1d9", accent="#39d353", muted="#8b949e", tint=None,
-                     title="#39d353", roughness=0, bg="#0d1117"),
     "neon": dict(ink="#d1fae5", accent="#ff00aa", muted="#67e8f9", tint=None,
                  title="#00ffcc", roughness=1, bg="#0a0f1c"),
-    "paper": dict(ink="#1a1a1a", accent="#c41e3a", muted="#7a746c", tint=None,
-                  title="#1a1a1a", roughness=1, bg="#faf9f7"),
+    # clean (no wobble, other fonts, sharp or filled shapes)
+    "terminal": dict(ink="#c9d1d9", accent="#39d353", muted="#8b949e", tint=None,
+                     title="#39d353", roughness=0, bg="#0d1117", font=3, round=False),
+    "swiss": dict(ink="#111111", accent="#ff3300", muted="#6b7280", tint=None,
+                  title="#111111", roughness=0, bg="#ffffff", font=2, round=False),
+    "notebook": dict(ink="#1a1a1a", accent="#e11d48", muted="#6b6b6b", tint=None,
+                     title="#1a1a1a", roughness=0, bg="#f8f6f1", font=2, round=True,
+                     cards=["#98d4bb", "#c7b8ea", "#f4b8c5", "#a8d8ea", "#ffe6a7"]),
+    "voltage": dict(ink="#ffffff", accent="#d4ff00", muted="#bfdbfe", tint=None,
+                    title="#d4ff00", roughness=0, bg="#0066ff", font=2, round=False),
 }
+# Optional theme keys: font (5 hand, 2 Helvetica, 3 mono), round (rounded corners on boxes and nodes),
+# cards (list of fills that boxes and nodes take in turn).
 OBSIDIAN_HEADER = """---
 excalidraw-plugin: parsed
 tags: [excalidraw]
@@ -80,15 +85,24 @@ def open_in_obsidian(path):
 
 
 class Sketch:
-    def __init__(self, theme="ink", roughness=None, font=5):
+    def __init__(self, theme="paper", roughness=None, font=None):
         self.t = THEMES[theme]
         self.theme = theme
-        self.els, self.n, self.font = [], 0, font
+        self.els, self.n, self.card = [], 0, 0
+        self.font = font or self.t.get("font", 5)
         self.rough = self.t["roughness"] if roughness is None else roughness
         self._roles = {INK: self.t["ink"], RED: self.t["accent"], GREY: self.t["muted"]}
 
     def _c(self, color):
         return self._roles.get(color, color)
+
+    def _fill(self):
+        """Next card colour for themes that fill shapes, else the tint, else none."""
+        cards = self.t.get("cards")
+        if cards:
+            self.card += 1
+            return cards[(self.card - 1) % len(cards)]
+        return self.t["tint"] or "transparent"
 
     def _base(self, kind, x, y, w, h, **kw):
         self.n += 1
@@ -121,8 +135,9 @@ class Sketch:
 
     def box(self, x, y, w, h, color=INK, style="solid", hatch=False):
         self._base("rectangle", x, y, w, h, strokeColor=color, strokeStyle=style, strokeWidth=2,
-                   backgroundColor=color if hatch else (self.t["tint"] or "transparent"),
-                   fillStyle="hachure" if hatch else "solid")
+                   backgroundColor=color if hatch else self._fill(),
+                   fillStyle="hachure" if hatch else "solid",
+                   roundness={"type": 3} if self.t.get("round") else None)
 
     def ellipse(self, x, y, w, h, color=INK, width=2):
         self._base("ellipse", x, y, w, h, strokeColor=color, strokeWidth=width)
@@ -137,7 +152,8 @@ class Sketch:
     def node(self, x, y, label, sub="", glyph="", color=INK, size=90, above=False):
         """Workflow node: rough square, glyph inside, label and grey subtitle below."""
         self._base("rectangle", x, y, size, size, strokeColor=color, strokeWidth=2,
-                   backgroundColor=self.t["tint"] or "transparent", roundness={"type": 3})
+                   backgroundColor=self._fill(),
+                   roundness={"type": 3} if self.t.get("round", True) else None)
         if glyph:
             self.text(glyph, x + size / 2 - text_width(glyph, 34) / 2, y + size / 2 - 22, 34, color)
         lines = label.split("\n")
