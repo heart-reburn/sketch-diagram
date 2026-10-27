@@ -14,14 +14,6 @@ Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 - Stat cards, timeline, split panel (title left, content right), notebook tabs, cover with tags
 - Quote, chapter divider, numbered steps, kanban, mind map, before-and-after compare, bird's-eye lanes
 
-| | |
-|---|---|
-| ![paper: stat cards](docs/paper-stats.png) | ![notebook: kanban](docs/notebook-kanban.png) |
-| ![botanical: stat cards](docs/botanical-stats.png) | ![terminal: notebook tabs](docs/terminal-tabs.png) |
-| ![dark: flow](docs/dark-flow.png) | ![color: before and after](docs/color-compare.png) |
-
-![blueprint: n8n-style workflow](docs/blueprint-workflow.png)
-
 ## Themes
 
 Seven themes. All use the handwriting font; the same drawings work in each.
@@ -35,6 +27,18 @@ Seven themes. All use the handwriting font; the same drawings work in each.
 | `blueprint` | Pale ink on deep blue, yellow accent, grid wallpaper |
 | `botanical` | Near-black, gold titles, dusty pink accent |
 | `terminal` | GitHub dark, green accent, straight strokes, sharp corners |
+
+### One layout per theme
+
+| `paper` · stat cards | `color` · before and after |
+|---|---|
+| ![paper](docs/paper-stats.png) | ![color](docs/color-compare.png) |
+| **`dark` · flow** | **`notebook` · kanban** |
+| ![dark](docs/dark-flow.png) | ![notebook](docs/notebook-kanban.png) |
+| **`blueprint` · workflow** | **`botanical` · stat cards** |
+| ![blueprint](docs/blueprint-workflow.png) | ![botanical](docs/botanical-stats.png) |
+| **`terminal` · notebook tabs** | |
+| ![terminal](docs/terminal-tabs.png) | |
 
 Ready-made files for every theme are in [`examples/`](examples/). Open any of them in Obsidian with the Excalidraw plugin.
 
