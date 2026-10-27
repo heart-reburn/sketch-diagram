@@ -19,6 +19,8 @@ Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 | ![paper: stat cards](docs/paper-stats.png) | ![notebook: kanban](docs/notebook-kanban.png) |
 | ![botanical: stat cards](docs/botanical-stats.png) | ![terminal: notebook tabs](docs/terminal-tabs.png) |
 
+![blueprint: n8n-style workflow](docs/blueprint-workflow.png)
+
 ## Themes
 
 Five themes. All use the handwriting font; the same drawings work in each.
