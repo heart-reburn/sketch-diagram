@@ -32,7 +32,7 @@ Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY
 4. Run Python with `-I`.
 
 ## Layouts
-Beyond flows and charts, `Sketch` has layout pieces borrowed from slide design: `panel` (solid block), `pill` (tag), `stat` (big-number card), `timeline`, `split` (title left, panel right) and `tabs` (page with index tabs). `examples/make_examples.py` shows each one: stats, timeline, split, tabs and cover.
+Beyond flows and charts, `Sketch` has layout pieces borrowed from slide design: `panel` (solid block), `pill` (tag), `stat` (big-number card), `timeline`, `split` (title left, panel right) `tabs` (page with index tabs), `quote`, `chapter` (huge number divider), `steps` (numbered agenda), `kanban`, `mindmap`, `compare` (two columns with badges), `lanes` (bird's-eye swim lanes) and `grid` (wallpaper). `panel(shadow=True)` adds a hard offset shadow. `examples/make_examples.py` shows each one.
 
 ## Examples
 `examples/make_examples.py <examples folder>` writes eighteen generic drawings (a flow, a bar chart, a comparison, a workflow, a checklist, a summary, stat cards, a timeline, a split panel, notebook tabs, a cover, a quote, a chapter divider, numbered steps, a kanban board, a mind map, a before-and-after compare and bird's-eye lanes) into one folder per theme mixing Chinese and English, with made-up numbers. Copy their layout. CJK text needs no special font; Excalidraw falls back to the system font. CJK characters count as one em wide for spacing.
