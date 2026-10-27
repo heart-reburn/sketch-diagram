@@ -158,6 +158,7 @@ def build(theme, out):
 
     # 11. Cover
     cv = Sketch(theme=theme)
+    cv.grid()
     cv.text("01", 80, 70, 20, GREY)
     cv.text("手绘图表\nHand-drawn\ndiagrams", 80, 150, 72, cv.t["title"])
     cv.line(80, 470, 380, 470, RED, 3)
@@ -166,6 +167,61 @@ def build(theme, out):
     for lab in ["Obsidian", "Excalidraw", "中文 + English"]:
         x += cv.pill(x, 600, lab, INK, 16) + 12
     cv.save_obsidian(os.path.join(out, "Example cover.excalidraw.md"))
+
+    # 12. Quote
+    q = Sketch(theme=theme)
+    q.grid()
+    q.quote("先想清楚，\n再动手画。", "Think first, then draw. · 示例 sample quote")
+    q.save_obsidian(os.path.join(out, "Example quote.excalidraw.md"))
+
+    # 13. Chapter divider
+    ch = Sketch(theme=theme)
+    ch.grid()
+    ch.chapter("02", "怎么做 How it works", "三步，每步一张图 · three steps, one picture each")
+    ch.save_obsidian(os.path.join(out, "Example chapter.excalidraw.md"))
+
+    # 14. Numbered steps
+    st = Sketch(theme=theme)
+    st.crumb("议程 · Agenda")
+    st.title("今天讲什么 Today", 40, 80, 32)
+    st.steps([("问题 The problem", "为什么旧办法不够 · why the old way falls short"),
+              ("做法 The approach", "一张图一个想法 · one picture, one idea"),
+              ("演示 Demo", "现场画一遍 · draw it live"),
+              ("问答 Questions", "")], x=40, y=170, current=2)
+    st.save_obsidian(os.path.join(out, "Example steps.excalidraw.md"))
+
+    # 15. Kanban
+    kb = Sketch(theme=theme)
+    kb.crumb("看板 · Board")
+    kb.title("本周 This week", 40, 80, 32)
+    kb.kanban([("待办 To do", ["写大纲 outline", "找例子 examples"]),
+               ("进行中 Doing", ["画流程图 flow diagram", "改标题 titles"]),
+               ("完成 Done", ["选主题 pick theme"])], x=40, y=170)
+    kb.save_obsidian(os.path.join(out, "Example kanban.excalidraw.md"))
+
+    # 16. Mind map
+    mm = Sketch(theme=theme)
+    mm.grid()
+    mm.mindmap("画图 Diagrams", ["流程\nflows", "图表\ncharts", "幻灯片\nslides", "工作流\nworkflows"])
+    mm.save_obsidian(os.path.join(out, "Example mindmap.excalidraw.md"))
+
+    # 17. Before and after
+    cp = Sketch(theme=theme)
+    cp.crumb("对比 · Compare")
+    cp.title("改之前，改之后 Before and after", 40, 80, 32)
+    cp.compare(("之前 before", "满屏文字 Walls of text", ["十几个要点 a dozen bullets", "没有重点 no focus", "没人读 nobody reads"]),
+               ("之后 after", "一页一个想法 One idea a page", ["一张图 one picture", "一句话 one line", "看一眼就懂 clear at a glance"]),
+               x=40, y=170, colw=500)
+    cp.save_obsidian(os.path.join(out, "Example compare.excalidraw.md"))
+
+    # 18. Bird's-eye lanes
+    ln = Sketch(theme=theme)
+    ln.crumb("全景 · Bird's eye")
+    ln.title("一张图看全局 The whole system", 40, 80, 32)
+    ln.lanes([("用户 User", ["提问 ask", "看图 read"]),
+              ("系统 System", ["解析 parse", "绘制 draw", "保存 save"]),
+              ("笔记 Vault", ["覆盖 overwrite", "打开 open"])], x=40, y=160)
+    ln.save_obsidian(os.path.join(out, "Example lanes.excalidraw.md"))
 
 
 root = sys.argv[1]

@@ -1,6 +1,6 @@
 ---
 name: sketch-diagram
-description: Draw minimalist, hand-drawn Excalidraw diagrams (flows, comparisons, simple charts) as Obsidian .excalidraw.md or plain .excalidraw files. Minimal by default (ink, one red accent, no filled boxes) with ten themes, hand-drawn or clean. Use when asked for an Excalidraw drawing, a sketch-style flow, or a hand-drawn diagram.
+description: Draw minimalist, hand-drawn Excalidraw diagrams (flows, comparisons, simple charts) as Obsidian .excalidraw.md or plain .excalidraw files. Minimal by default (ink, one red accent, no filled boxes) with five themes and a set of slide layouts, all in handwriting. Use when asked for an Excalidraw drawing, a sketch-style flow, or a hand-drawn diagram.
 ---
 
 # Sketch diagram
@@ -10,11 +10,10 @@ Hand-drawn Excalidraw diagrams with swappable themes. The default theme, `paper`
 ## Themes
 `Sketch(theme="paper")` is the default. Two families share one set of drawings.
 
-Hand-drawn (wobbly strokes, handwriting font): `paper` (warm cream, charcoal ink, crimson accent; the minimal one), `color` (blue titles, slate text, amber accent, light blue boxes), `dark`, `blueprint` (pale ink on deep blue, yellow accent), `botanical` (near-black, gold titles, dusty pink accent) and `neon` (navy, cyan titles, magenta accent).
+All themes use the handwriting font. `paper` (warm cream, charcoal ink, crimson accent; the minimal default), `notebook` (cream page, rounded boxes in rotating pastel fills), `blueprint` (pale ink on deep blue, yellow accent, grid), `botanical` (near-black, gold titles, dusty pink accent) and `terminal` (GitHub dark, green accent, straight strokes, sharp corners, grid).
 
-Clean (straight strokes, other fonts, sharp or filled shapes): `terminal` (GitHub dark, mono font, green accent), `swiss` (white, black, one red, Helvetica, sharp corners), `notebook` (cream page, Helvetica, rounded boxes in rotating pastel fills) and `voltage` (electric blue, white, neon yellow, Helvetica).
 
-Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY` for side notes) and the theme remaps them, so any drawing can be re-skinned by changing one argument. A theme sets canvas background, title colour, roughness, and optionally `font`, `round` (rounded corners), `tint` (one box fill) and `cards` (fills used in turn). To add a theme, add an entry to `THEMES` in `scripts/sketch.py`.
+Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY` for side notes) and the theme remaps them, so any drawing can be re-skinned by changing one argument. A theme sets canvas background, title colour, roughness, and optionally `grid` (wallpaper), `round` (rounded corners), `tint` (one box fill) and `cards` (fills used in turn). To add a theme, add an entry to `THEMES` in `scripts/sketch.py`.
 
 
 ## Look (paper theme)
@@ -36,7 +35,7 @@ Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY
 Beyond flows and charts, `Sketch` has layout pieces borrowed from slide design: `panel` (solid block), `pill` (tag), `stat` (big-number card), `timeline`, `split` (title left, panel right) and `tabs` (page with index tabs). `examples/make_examples.py` shows each one: stats, timeline, split, tabs and cover.
 
 ## Examples
-`examples/make_examples.py <examples folder>` writes eleven generic drawings (a flow, a bar chart, a comparison, a workflow, a checklist, a summary, stat cards, a timeline, a split panel, notebook tabs and a cover) into one folder per theme mixing Chinese and English, with made-up numbers. Copy their layout. CJK text needs no special font; Excalidraw falls back to the system font. CJK characters count as one em wide for spacing.
+`examples/make_examples.py <examples folder>` writes eighteen generic drawings (a flow, a bar chart, a comparison, a workflow, a checklist, a summary, stat cards, a timeline, a split panel, notebook tabs, a cover, a quote, a chapter divider, numbered steps, a kanban board, a mind map, a before-and-after compare and bird's-eye lanes) into one folder per theme mixing Chinese and English, with made-up numbers. Copy their layout. CJK text needs no special font; Excalidraw falls back to the system font. CJK characters count as one em wide for spacing.
 
 ## Slide layouts
 `crumb`, `subtitle`, `checklist`, `rows` (label left, answer right, thin underline, last row red) and `closing` (one red underlined line) build text slides in the same look. Use one red element per slide.

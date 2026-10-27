@@ -1,9 +1,8 @@
 # Changelog
 
 ## Unreleased
-- Ten themes in two families, hand-drawn and clean. Clean themes add Helvetica and mono fonts, sharp corners and pastel card fills.
-- New layouts: stat cards, timeline, split panel, notebook tabs, cover, pills.
-- Default theme is now `paper` (replaces `ink`).
+- Five themes, all handwriting: paper (default, replaces ink), notebook, blueprint, botanical, terminal.
+- New layouts: stat cards, timeline, split panel, notebook tabs, cover, pills, quote, chapter divider, numbered steps, kanban, mind map, compare, bird's-eye lanes, hard-offset shadow, grid wallpaper.
 
 ## 0.1.0
 - First release: flows, bar charts, comparisons, n8n-style workflow graphs, checklist and summary slides.

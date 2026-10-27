@@ -11,31 +11,20 @@ INK, RED, GREY = "#1e1e1e", "#c92a2a", "#868e96"  # roles: text and lines, the o
 # A theme remaps those three roles, so every drawing can be re-skinned with Sketch(theme=...).
 # tint = light fill for boxes and nodes (None means no fill); title = heading colour.
 THEMES = {
-    # hand-drawn
-    "paper": dict(panel="#f0ece4", ink=INK, accent="#c41e3a", muted="#7a746c", tint=None, title=INK, roughness=2, bg="#faf9f7"),
-    "color": dict(panel="#dbeafe", ink="#374151", accent="#d97706", muted="#6b7280", tint="#dbeafe",
-                  title="#1e40af", roughness=1, bg="#ffffff"),
-    "dark": dict(panel="#2a2a30", ink="#e5e7eb", accent="#f87171", muted="#9ca3af", tint=None,
-                 title="#ffffff", roughness=2, bg="#1b1b1f"),
+    "paper": dict(panel="#f0ece4", ink=INK, accent="#c41e3a", muted="#7a746c", tint=None, title=INK,
+                  roughness=2, bg="#faf9f7"),
+    "notebook": dict(panel="#ffffff", ink="#1a1a1a", accent="#e11d48", muted="#6b6b6b", tint=None,
+                     title="#1a1a1a", roughness=1, bg="#f8f6f1", round=True,
+                     cards=["#98d4bb", "#c7b8ea", "#f4b8c5", "#a8d8ea", "#ffe6a7"]),
     "blueprint": dict(panel="#1e40af", ink="#e0f2fe", accent="#fde047", muted="#93c5fd", tint=None,
-                      title="#ffffff", roughness=1, bg="#1e3a8a"),
+                      title="#ffffff", roughness=1, bg="#1e3a8a", grid=True),
     "botanical": dict(panel="#1c1c1c", ink="#e8e4df", accent="#e8b4b8", muted="#9a9590", tint=None,
                       title="#d4a574", roughness=1, bg="#0f0f0f"),
-    "neon": dict(panel="#111a2e", ink="#d1fae5", accent="#ff00aa", muted="#67e8f9", tint=None,
-                 title="#00ffcc", roughness=1, bg="#0a0f1c"),
-    # clean (no wobble, other fonts, sharp or filled shapes)
     "terminal": dict(panel="#161b22", ink="#c9d1d9", accent="#39d353", muted="#8b949e", tint=None,
-                     title="#39d353", roughness=0, bg="#0d1117", font=3, round=False),
-    "swiss": dict(panel="#f1f1f1", ink="#111111", accent="#ff3300", muted="#6b7280", tint=None,
-                  title="#111111", roughness=0, bg="#ffffff", font=2, round=False),
-    "notebook": dict(panel="#ffffff", ink="#1a1a1a", accent="#e11d48", muted="#6b6b6b", tint=None,
-                     title="#1a1a1a", roughness=0, bg="#f8f6f1", font=2, round=True,
-                     cards=["#98d4bb", "#c7b8ea", "#f4b8c5", "#a8d8ea", "#ffe6a7"]),
-    "voltage": dict(panel="#1a1a2e", ink="#ffffff", accent="#d4ff00", muted="#bfdbfe", tint=None,
-                    title="#d4ff00", roughness=0, bg="#0066ff", font=2, round=False),
+                     title="#39d353", roughness=0, bg="#0d1117", round=False, grid=True),
 }
-# panel = fill for cards and split halves. Optional theme keys: font (5 hand, 2 Helvetica, 3 mono), round (rounded corners on boxes and nodes),
-# cards (list of fills that boxes and nodes take in turn).
+# panel = fill for cards and split halves. Optional theme keys: round (rounded corners on boxes and nodes),
+# cards (list of fills that boxes and nodes take in turn), grid (faint wallpaper grid on cover-style drawings).
 OBSIDIAN_HEADER = """---
 excalidraw-plugin: parsed
 tags: [excalidraw]
@@ -123,9 +112,9 @@ class Sketch:
                    fontSize=size, fontFamily=self.font, textAlign=align, verticalAlign="top",
                    containerId=None, originalText=s, autoResize=True, lineHeight=1.25)
 
-    def line(self, x1, y1, x2, y2, color=INK, width=2, style="solid"):
+    def line(self, x1, y1, x2, y2, color=INK, width=2, style="solid", opacity=100):
         self._base("line", x1, y1, x2 - x1, y2 - y1, strokeColor=color, strokeWidth=width,
-                   strokeStyle=style, points=[[0, 0], [x2 - x1, y2 - y1]],
+                   strokeStyle=style, opacity=opacity, points=[[0, 0], [x2 - x1, y2 - y1]],
                    startBinding=None, endBinding=None, startArrowhead=None, endArrowhead=None)
 
     def arrow(self, x1, y1, x2, y2, color=INK, style="solid"):
@@ -164,9 +153,13 @@ class Sketch:
             self.text(sub, x + size / 2 - text_width(sub, 14) / 2, ly + 2 + 22 * len(lines), 14, GREY)
 
     # ---- layout pieces: cards, pills, stats, timeline, split panels, tabs ----
-    def panel(self, x, y, w, h, fill=None, stroke=None):
-        """Solid filled block. Fill defaults to the theme panel colour; no outline unless stroke is given."""
+    def panel(self, x, y, w, h, fill=None, stroke=None, shadow=False):
+        """Solid filled block. Fill defaults to the theme panel colour; no outline unless stroke is given.
+        shadow=True puts a hard offset block behind it, the flat shadow slide systems use."""
         fill = fill or self.t["panel"]
+        if shadow:
+            self._base("rectangle", x + 8, y + 8, w, h, strokeColor=GREY, backgroundColor=GREY, opacity=40,
+                       roundness={"type": 3} if self.t.get("round") else None)
         self._base("rectangle", x, y, w, h, strokeColor=stroke or fill, backgroundColor=fill,
                    strokeWidth=2 if stroke else 1, roundness={"type": 3} if self.t.get("round") else None)
 
@@ -180,7 +173,7 @@ class Sketch:
 
     def stat(self, x, y, w, h, value, label, color=INK):
         """Card with a big number and a small label under it."""
-        self.panel(x, y, w, h, self._fill() if self.t.get("cards") else None)
+        self.panel(x, y, w, h, self._fill() if self.t.get("cards") else None, shadow=True)
         self.text(value, x + 24, y + 22, 54, color)
         self.text(label, x + 24, y + h - 44, 16, GREY)
 
@@ -205,6 +198,99 @@ class Sketch:
             self.panel(x + w, ty, 40 + text_width(lab, 18) + 24, 56, self._fill() if self.t.get("cards") else None,
                        RED if i == 0 else None)
             self.text(lab, x + w + 20, ty + 15, 18, RED if i == 0 else INK)
+
+    def grid(self, w=1200, h=700, step=40):
+        """Faint wallpaper grid, for themes that have one (blueprint, terminal). No-op otherwise."""
+        if not self.t.get("grid"):
+            return
+        for gx in range(0, w + 1, step):
+            self.line(gx, 0, gx, h, GREY, 1, opacity=18)
+        for gy in range(0, h + 1, step):
+            self.line(0, gy, w, gy, GREY, 1, opacity=18)
+
+    def quote(self, s, by="", x=100, y=140, size=38):
+        """Big opening quote mark, the quote, and who said it."""
+        self.text("\u201c", x - 10, y - 70, 140, RED)
+        self.text(s, x + 70, y + 40, size)
+        n = len(s.split("\n"))
+        self.line(x + 70, y + 70 + n * size * 1.25, x + 190, y + 70 + n * size * 1.25, RED, 3)
+        if by:
+            self.text(by, x + 70, y + 90 + n * size * 1.25, 18, GREY)
+
+    def chapter(self, num, title, sub="", x=80, y=160):
+        """Sparse divider slide: a huge number, a title, one grey line."""
+        self.text(num, x, y, 170, RED)
+        self.text(title, x, y + 230, 48, self.t["title"])
+        self.line(x, y + 300, x + text_width(title, 48), y + 300, self.t["title"], 2)
+        if sub:
+            self.text(sub, x, y + 322, 20, GREY)
+
+    def steps(self, items, x=60, y=150, step=110, current=None):
+        """Numbered agenda: big grey numeral, text, thin rule; the current step is red."""
+        for i, (a, b) in enumerate(items):
+            yy, c = y + i * step, RED if i == current else INK
+            self.text("%02d" % (i + 1), x, yy, 52, c if i == current else GREY)
+            self.text(a, x + 130, yy + 2, 28, c)
+            if b:
+                self.text(b, x + 130, yy + 40, 16, GREY)
+            self.line(x, yy + step - 22, x + 860, yy + step - 22, GREY, 1)
+
+    def kanban(self, cols, x=40, y=150, colw=270, gap=30, card_h=70):
+        """Columns of cards. cols = [(heading, [card, ...]), ...]; the last column is the red one."""
+        for i, (head, cards) in enumerate(cols):
+            cx, c = x + i * (colw + gap), RED if i == len(cols) - 1 else INK
+            self.text(head, cx, y, 22, c)
+            self.line(cx, y + 36, cx + colw, y + 36, c, 2)
+            for j, card in enumerate(cards):
+                cy = y + 56 + j * (card_h + 16)
+                self.panel(cx, cy, colw, card_h, self._fill() if self.t.get("cards") else None, shadow=True)
+                self.text(card, cx + 16, cy + card_h / 2 - 12, 18)
+
+    def mindmap(self, center, branches, cx=500, cy=330, rx=330, ry=210):
+        """Centre idea with branches spread around it. Branch labels may use two lines."""
+        import math
+        n = len(branches)
+        for i, lab in enumerate(branches):
+            a = -math.pi / 2 + 2 * math.pi * i / n + math.pi / n
+            bx, by = cx + rx * math.cos(a), cy + ry * math.sin(a)
+            self.line(cx, cy, bx, by, GREY, 2)
+        for i, lab in enumerate(branches):
+            a = -math.pi / 2 + 2 * math.pi * i / n + math.pi / n
+            bx, by = cx + rx * math.cos(a), cy + ry * math.sin(a)
+            lines = lab.split("\n")
+            w = max(text_width(l, 20) for l in lines) + 36
+            h = len(lines) * 25 + 24
+            self.panel(bx - w / 2, by - h / 2, w, h, self.t["bg"], INK)
+            self.text(lab, bx - w / 2 + 18, by - h / 2 + 12, 20, INK)
+        w = text_width(center, 28) + 56
+        self.panel(cx - w / 2, cy - 40, w, 80, self.t["bg"], RED)
+        self.text(center, cx - w / 2 + 28, cy - 18, 28, RED)
+
+    def compare(self, left, right, x=60, y=150, colw=470, gap=60):
+        """Two columns, each (badge, heading, [points]); the right one is red. Vertical rule between."""
+        for i, (badge, head, points) in enumerate((left, right)):
+            cx, c = x + i * (colw + gap), RED if i else INK
+            self.pill(cx, y, badge, c, 16, filled=True)
+            self.text(head, cx, y + 70, 30, c)
+            self.line(cx, y + 118, cx + colw, y + 118, c, 2)
+            for j, pt in enumerate(points):
+                self.text(pt, cx, y + 146 + j * 64, 20)
+        self.line(x + colw + gap / 2, y, x + colw + gap / 2, y + 400, GREY, 1)
+
+    def lanes(self, lanes, x=40, y=150, w=900, lane_h=120):
+        """Bird's-eye multi-lane diagram. lanes = [(name, [step, ...]), ...]; steps flow left to right,
+        at most 4 per lane. The last lane is red."""
+        for i, (name, steps) in enumerate(lanes):
+            ly, c = y + i * lane_h, RED if i == len(lanes) - 1 else INK
+            self.text(name, x, ly + lane_h / 2 - 22, 20, c)
+            self.line(x, ly + lane_h - 8, x + w, ly + lane_h - 8, GREY, 1)
+            cw = (w - 170 - 40 * (len(steps) - 1)) / len(steps)
+            for j, st in enumerate(steps):
+                cx = x + 170 + j * (cw + 40)
+                self.panel(cx, ly + 12, cw, lane_h - 44, self._fill() if self.t.get("cards") else None, c)
+                self.text(st, cx + 14, ly + lane_h / 2 - 22, 17, INK)
+                if j:
+                    self.arrow(cx - 36, ly + lane_h / 2 - 10, cx - 4, ly + lane_h / 2 - 10, GREY)
 
     def crumb(self, s, x=40, y=24, width=1100):
         """Slide look: tiny grey section crumb with a thin rule under it."""
