@@ -1,0 +1,8 @@
+{
+  "name": "sketch-diagram",
+  "version": "0.1.0",
+  "description": "Hand-drawn Excalidraw diagrams for Obsidian: flows, bar charts, n8n-style workflows and slide layouts, in five themes.",
+  "license": "MIT",
+  "author": { "name": "heart-reburn", "url": "https://github.com/heart-reburn" },
+  "repository": "https://github.com/heart-reburn/sketch-diagram"
+}
