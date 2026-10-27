@@ -14,7 +14,10 @@ Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 - Stat cards, timeline, split panel (title left, content right), notebook tabs, cover with tags
 - Quote, chapter divider, numbered steps, kanban, mind map, before-and-after compare, bird's-eye lanes
 
-![Kanban board in the notebook theme](docs/notebook-kanban.png)
+| | |
+|---|---|
+| ![paper: stat cards](docs/paper-stats.png) | ![notebook: kanban](docs/notebook-kanban.png) |
+| ![botanical: stat cards](docs/botanical-stats.png) | ![terminal: notebook tabs](docs/terminal-tabs.png) |
 
 ## Themes
 
