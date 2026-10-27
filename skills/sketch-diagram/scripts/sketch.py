@@ -12,29 +12,29 @@ INK, RED, GREY = "#1e1e1e", "#c92a2a", "#868e96"  # roles: text and lines, the o
 # tint = light fill for boxes and nodes (None means no fill); title = heading colour.
 THEMES = {
     # hand-drawn
-    "paper": dict(ink=INK, accent="#c41e3a", muted="#7a746c", tint=None, title=INK, roughness=2, bg="#faf9f7"),
-    "color": dict(ink="#374151", accent="#d97706", muted="#6b7280", tint="#dbeafe",
+    "paper": dict(panel="#f0ece4", ink=INK, accent="#c41e3a", muted="#7a746c", tint=None, title=INK, roughness=2, bg="#faf9f7"),
+    "color": dict(panel="#dbeafe", ink="#374151", accent="#d97706", muted="#6b7280", tint="#dbeafe",
                   title="#1e40af", roughness=1, bg="#ffffff"),
-    "dark": dict(ink="#e5e7eb", accent="#f87171", muted="#9ca3af", tint=None,
+    "dark": dict(panel="#2a2a30", ink="#e5e7eb", accent="#f87171", muted="#9ca3af", tint=None,
                  title="#ffffff", roughness=2, bg="#1b1b1f"),
-    "blueprint": dict(ink="#e0f2fe", accent="#fde047", muted="#93c5fd", tint=None,
+    "blueprint": dict(panel="#1e40af", ink="#e0f2fe", accent="#fde047", muted="#93c5fd", tint=None,
                       title="#ffffff", roughness=1, bg="#1e3a8a"),
-    "botanical": dict(ink="#e8e4df", accent="#e8b4b8", muted="#9a9590", tint=None,
+    "botanical": dict(panel="#1c1c1c", ink="#e8e4df", accent="#e8b4b8", muted="#9a9590", tint=None,
                       title="#d4a574", roughness=1, bg="#0f0f0f"),
-    "neon": dict(ink="#d1fae5", accent="#ff00aa", muted="#67e8f9", tint=None,
+    "neon": dict(panel="#111a2e", ink="#d1fae5", accent="#ff00aa", muted="#67e8f9", tint=None,
                  title="#00ffcc", roughness=1, bg="#0a0f1c"),
     # clean (no wobble, other fonts, sharp or filled shapes)
-    "terminal": dict(ink="#c9d1d9", accent="#39d353", muted="#8b949e", tint=None,
+    "terminal": dict(panel="#161b22", ink="#c9d1d9", accent="#39d353", muted="#8b949e", tint=None,
                      title="#39d353", roughness=0, bg="#0d1117", font=3, round=False),
-    "swiss": dict(ink="#111111", accent="#ff3300", muted="#6b7280", tint=None,
+    "swiss": dict(panel="#f1f1f1", ink="#111111", accent="#ff3300", muted="#6b7280", tint=None,
                   title="#111111", roughness=0, bg="#ffffff", font=2, round=False),
-    "notebook": dict(ink="#1a1a1a", accent="#e11d48", muted="#6b6b6b", tint=None,
+    "notebook": dict(panel="#ffffff", ink="#1a1a1a", accent="#e11d48", muted="#6b6b6b", tint=None,
                      title="#1a1a1a", roughness=0, bg="#f8f6f1", font=2, round=True,
                      cards=["#98d4bb", "#c7b8ea", "#f4b8c5", "#a8d8ea", "#ffe6a7"]),
-    "voltage": dict(ink="#ffffff", accent="#d4ff00", muted="#bfdbfe", tint=None,
+    "voltage": dict(panel="#1a1a2e", ink="#ffffff", accent="#d4ff00", muted="#bfdbfe", tint=None,
                     title="#d4ff00", roughness=0, bg="#0066ff", font=2, round=False),
 }
-# Optional theme keys: font (5 hand, 2 Helvetica, 3 mono), round (rounded corners on boxes and nodes),
+# panel = fill for cards and split halves. Optional theme keys: font (5 hand, 2 Helvetica, 3 mono), round (rounded corners on boxes and nodes),
 # cards (list of fills that boxes and nodes take in turn).
 OBSIDIAN_HEADER = """---
 excalidraw-plugin: parsed
@@ -162,6 +162,49 @@ class Sketch:
         self.text(label, x + size / 2 - max(text_width(l, 18) for l in lines) / 2, ly, 18, color, "center")
         if sub:
             self.text(sub, x + size / 2 - text_width(sub, 14) / 2, ly + 2 + 22 * len(lines), 14, GREY)
+
+    # ---- layout pieces: cards, pills, stats, timeline, split panels, tabs ----
+    def panel(self, x, y, w, h, fill=None, stroke=None):
+        """Solid filled block. Fill defaults to the theme panel colour; no outline unless stroke is given."""
+        fill = fill or self.t["panel"]
+        self._base("rectangle", x, y, w, h, strokeColor=stroke or fill, backgroundColor=fill,
+                   strokeWidth=2 if stroke else 1, roundness={"type": 3} if self.t.get("round") else None)
+
+    def pill(self, x, y, label, color=INK, size=16, filled=False):
+        """Small rounded tag. Returns its width so tags can be laid out in a row."""
+        w, h = text_width(label, size) + 32, size * 1.25 + 16
+        self._base("rectangle", x, y, w, h, strokeColor=color, strokeWidth=2, roundness={"type": 3},
+                   backgroundColor=self._fill() if filled else "transparent")
+        self.text(label, x + 16, y + 8, size, color)
+        return w
+
+    def stat(self, x, y, w, h, value, label, color=INK):
+        """Card with a big number and a small label under it."""
+        self.panel(x, y, w, h, self._fill() if self.t.get("cards") else None)
+        self.text(value, x + 24, y + 22, 54, color)
+        self.text(label, x + 24, y + h - 44, 16, GREY)
+
+    def timeline(self, items, x=80, y=300, step=260, current=None):
+        """Horizontal line with a dot per item; item = (when, what). The current one is red."""
+        self.line(x, y, x + step * (len(items) - 1) + 40, y, INK, 2)
+        for i, (when, what) in enumerate(items):
+            cx, c = x + i * step, RED if i == current else INK
+            self.ellipse(cx - 10, y - 10, 20, 20, c, 3)
+            self.text(when, cx - text_width(when, 24) / 2, y - 62, 24, c)
+            self.text(what, cx - max(text_width(l, 18) for l in what.split("\n")) / 2, y + 28, 18, INK, "center")
+
+    def split(self, left_w=460, w=1200, h=700, fill=None):
+        """Two halves: the right one is a panel. Put the big title on the left, the content on the right."""
+        self.panel(left_w, 0, w - left_w, h, fill)
+
+    def tabs(self, labels, x=60, y=40, w=860, h=560):
+        """A page with coloured index tabs sticking out of its right edge; the first tab is the active one."""
+        self.panel(x, y, w, h, self.t["bg"], INK)
+        for i, lab in enumerate(labels):
+            ty = y + 30 + i * 70
+            self.panel(x + w, ty, 40 + text_width(lab, 18) + 24, 56, self._fill() if self.t.get("cards") else None,
+                       RED if i == 0 else None)
+            self.text(lab, x + w + 20, ty + 15, 18, RED if i == 0 else INK)
 
     def crumb(self, s, x=40, y=24, width=1100):
         """Slide look: tiny grey section crumb with a thin rule under it."""

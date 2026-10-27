@@ -2,6 +2,7 @@
 
 ## Unreleased
 - Ten themes in two families, hand-drawn and clean. Clean themes add Helvetica and mono fonts, sharp corners and pastel card fills.
+- New layouts: stat cards, timeline, split panel, notebook tabs, cover, pills.
 - Default theme is now `paper` (replaces `ink`).
 
 ## 0.1.0

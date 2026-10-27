@@ -3,7 +3,7 @@ Run: python3 -I make_examples.py <examples dir>   (writes <examples dir>/<theme>
 """
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
-from sketch import Sketch, RED, GREY, INK, THEMES
+from sketch import Sketch, RED, GREY, INK, THEMES, text_width
 
 
 def build(theme, out):
@@ -112,6 +112,60 @@ def build(theme, out):
             ("怎么才算做完 Done when", "每一步都有对应的框 · every step has a box")], y=240)
     r.closing("最后一段最容易漏。 The last line is the one people skip.", 40, 700)
     r.save_obsidian(os.path.join(out, "Example summary.excalidraw.md"))
+
+    # 7. Stat cards
+    d = Sketch(theme=theme)
+    d.crumb("概览 · Overview")
+    d.title("本季度一览 Quarterly snapshot", 40, 80, 32)
+    d.subtitle("数字都是示例 · all numbers are made up")
+    for i, (v, lab, col) in enumerate([("1,284", "新用户 new users", INK), ("92%", "留存 retention", RED),
+                                       ("3.4s", "平均响应 avg response", INK), ("¥18k", "收入 revenue", INK)]):
+        d.stat(40 + i * 290, 230, 260, 170, v, lab, col)
+    d.closing("留存最关键。 Retention is the number to watch.", 40, 470)
+    d.save_obsidian(os.path.join(out, "Example stats.excalidraw.md"))
+
+    # 8. Timeline
+    tl = Sketch(theme=theme)
+    tl.crumb("路线图 · Roadmap")
+    tl.title("2026 路线图 Roadmap", 40, 80, 32)
+    tl.timeline([("Q1", "立项\nKickoff"), ("Q2", "内测\nPrivate beta"), ("Q3", "公测\nPublic launch"),
+                 ("Q4", "增长\nGrowth")], x=120, y=330, step=300, current=2)
+    tl.text("现在在这里 · we are here", 120 + 600 - 80, 420, 16, GREY)
+    tl.save_obsidian(os.path.join(out, "Example timeline.excalidraw.md"))
+
+    # 9. Split panel (title left, content right)
+    sp = Sketch(theme=theme)
+    sp.split(460, 1200, 640)
+    sp.text("把复杂\n变简单", 50, 180, 64, sp.t["title"])
+    sp.text("Make it simple", 54, 360, 24, GREY)
+    sp.pill(50, 440, "流程 flow")
+    sp.pill(190, 440, "图表 chart", RED)
+    for i, (a, b) in enumerate([("先想清楚", "think first"), ("一次说完", "say it once"), ("留白够多", "leave space")]):
+        sp.text(a, 540, 150 + i * 140, 30, INK)
+        sp.text(b, 540, 195 + i * 140, 18, GREY)
+        sp.line(540, 240 + i * 140, 1100, 240 + i * 140, GREY, 1)
+    sp.save_obsidian(os.path.join(out, "Example split.excalidraw.md"))
+
+    # 10. Notebook tabs
+    nb = Sketch(theme=theme)
+    nb.tabs(["概念 Concept", "步骤 Steps", "例子 Example", "总结 Recap"], 60, 40, 820, 540)
+    nb.text("概念 Concept", 110, 90, 36, nb.t["title"])
+    nb.line(110, 145, 110 + text_width("概念 Concept", 36), 145, nb.t["title"])
+    nb.text("一个页面，一个想法。\none page, one idea.", 110, 200, 24)
+    nb.text("右边的标签是别的页面。 The tabs on the right are the other pages.", 110, 330, 18, GREY)
+    nb.closing("先读第一页。 Start on page one.", 110, 460)
+    nb.save_obsidian(os.path.join(out, "Example tabs.excalidraw.md"))
+
+    # 11. Cover
+    cv = Sketch(theme=theme)
+    cv.text("01", 80, 70, 20, GREY)
+    cv.text("手绘图表\nHand-drawn\ndiagrams", 80, 150, 72, cv.t["title"])
+    cv.line(80, 470, 380, 470, RED, 3)
+    cv.text("流程 · 图表 · 工作流 · 幻灯片\nflows, charts, workflows and slides", 80, 500, 22, GREY)
+    x = 80
+    for lab in ["Obsidian", "Excalidraw", "中文 + English"]:
+        x += cv.pill(x, 600, lab, INK, 16) + 12
+    cv.save_obsidian(os.path.join(out, "Example cover.excalidraw.md"))
 
 
 root = sys.argv[1]

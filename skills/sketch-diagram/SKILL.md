@@ -32,8 +32,11 @@ Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY
 3. Save with `save_obsidian("Name.excalidraw.md")` or `save_excalidraw("Name.excalidraw")`. One drawing, one file: reuse the same name and never make `v2`/`copy` files. `save_*` overwrites by default; `save_obsidian` checks the vault's `workspace.json` and refuses (prints "OPEN in Obsidian, skipped") while the drawing is open; ask the user to close the tab, then re-run. This matters because an open drawing gets merged into the rewrite and the old and new scenes land on top of each other. Pass `overwrite=False` to skip files that already exist. Never copy a header from a drawing the plugin has already saved.
 4. Run Python with `-I`.
 
+## Layouts
+Beyond flows and charts, `Sketch` has layout pieces borrowed from slide design: `panel` (solid block), `pill` (tag), `stat` (big-number card), `timeline`, `split` (title left, panel right) and `tabs` (page with index tabs). `examples/make_examples.py` shows each one: stats, timeline, split, tabs and cover.
+
 ## Examples
-`examples/make_examples.py <examples folder>` writes six generic drawings (a flow, a bar chart, a comparison, a workflow, a checklist and a summary) into one folder per theme mixing Chinese and English, with made-up numbers. Copy their layout. CJK text needs no special font; Excalidraw falls back to the system font. CJK characters count as one em wide for spacing.
+`examples/make_examples.py <examples folder>` writes eleven generic drawings (a flow, a bar chart, a comparison, a workflow, a checklist, a summary, stat cards, a timeline, a split panel, notebook tabs and a cover) into one folder per theme mixing Chinese and English, with made-up numbers. Copy their layout. CJK text needs no special font; Excalidraw falls back to the system font. CJK characters count as one em wide for spacing.
 
 ## Slide layouts
 `crumb`, `subtitle`, `checklist`, `rows` (label left, answer right, thin underline, last row red) and `closing` (one red underlined line) build text slides in the same look. Use one red element per slide.
