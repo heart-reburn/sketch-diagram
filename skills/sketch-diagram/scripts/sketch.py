@@ -13,6 +13,10 @@ INK, RED, GREY = "#1e1e1e", "#c92a2a", "#868e96"  # roles: text and lines, the o
 THEMES = {
     "paper": dict(panel="#f0ece4", ink=INK, accent="#c41e3a", muted="#7a746c", tint=None, title=INK,
                   roughness=2, bg="#faf9f7"),
+    "color": dict(panel="#eff6ff", ink="#374151", accent="#d97706", muted="#6b7280", tint="#dbeafe",
+                  title="#1e40af", roughness=1, bg="#ffffff"),
+    "dark": dict(panel="#26262c", ink="#e5e7eb", accent="#f87171", muted="#9ca3af", tint=None,
+                 title="#ffffff", roughness=2, bg="#1b1b1f"),
     "notebook": dict(panel="#ffffff", ink="#1a1a1a", accent="#e11d48", muted="#6b6b6b", tint=None,
                      title="#1a1a1a", roughness=1, bg="#f8f6f1", round=True,
                      cards=["#98d4bb", "#c7b8ea", "#f4b8c5", "#a8d8ea", "#ffe6a7"]),

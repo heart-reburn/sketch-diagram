@@ -1,6 +1,6 @@
 # sketch-diagram
 
-An agent skill that draws hand-drawn Excalidraw diagrams for Obsidian. The default look is minimal: charcoal ink on cream, one red accent, handwriting font, almost no filled boxes. Four more themes re-skin the same drawings.
+An agent skill that draws hand-drawn Excalidraw diagrams for Obsidian. The default look is minimal: charcoal ink on cream, one red accent, handwriting font, almost no filled boxes. Six more themes re-skin the same drawings.
 
 Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 
@@ -23,11 +23,13 @@ Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 
 ## Themes
 
-Five themes. All use the handwriting font; the same drawings work in each.
+Seven themes. All use the handwriting font; the same drawings work in each.
 
 | Theme | Look |
 |---|---|
 | `paper` | Warm cream, charcoal ink, one crimson accent (default) |
+| `color` | White, blue titles, slate text, amber accent, light blue fill |
+| `dark` | Light ink on near-black, soft red accent |
 | `notebook` | Cream page, rounded boxes in rotating pastel fills |
 | `blueprint` | Pale ink on deep blue, yellow accent, grid wallpaper |
 | `botanical` | Near-black, gold titles, dusty pink accent |

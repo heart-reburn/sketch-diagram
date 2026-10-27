@@ -1,7 +1,7 @@
 # Changelog
 
 ## Unreleased
-- Five themes, all handwriting: paper (default, replaces ink), notebook, blueprint, botanical, terminal.
+- Seven themes, all handwriting: paper (default, replaces ink), color, dark, notebook, blueprint, botanical, terminal.
 - New layouts: stat cards, timeline, split panel, notebook tabs, cover, pills, quote, chapter divider, numbered steps, kanban, mind map, compare, bird's-eye lanes, hard-offset shadow, grid wallpaper.
 
 ## 0.1.0
