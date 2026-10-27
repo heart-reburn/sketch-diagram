@@ -1,0 +1,12 @@
+{
+  "name": "sketch-diagram",
+  "description": "Hand-drawn Excalidraw diagrams for Obsidian, with swappable themes.",
+  "owner": { "name": "heart-reburn" },
+  "plugins": [
+    {
+      "name": "sketch-diagram",
+      "source": "./",
+      "description": "Draw minimalist, hand-drawn Excalidraw diagrams (flows, charts, workflows, slides) as Obsidian .excalidraw.md files."
+    }
+  ]
+}
