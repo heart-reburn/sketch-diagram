@@ -1,6 +1,6 @@
 ---
 name: sketch-diagram
-description: Draw minimalist, hand-drawn Excalidraw diagrams (flows, comparisons, simple charts) as Obsidian .excalidraw.md or plain .excalidraw files. Minimal by default (ink, one red accent, no filled boxes) with five themes and a set of slide layouts, all in handwriting. Use when asked for an Excalidraw drawing, a sketch-style flow, or a hand-drawn diagram.
+description: Draw minimalist, hand-drawn Excalidraw diagrams (flows, comparisons, simple charts) as Obsidian .excalidraw.md or plain .excalidraw files. Minimal by default (ink, one red accent, no filled boxes) with seven themes and a set of slide layouts, all in handwriting. Use when asked for an Excalidraw drawing, a sketch-style flow, or a hand-drawn diagram.
 ---
 
 # Sketch diagram
@@ -10,7 +10,7 @@ Hand-drawn Excalidraw diagrams with swappable themes. The default theme, `paper`
 ## Themes
 `Sketch(theme="paper")` is the default. Two families share one set of drawings.
 
-All themes use the handwriting font. `paper` (warm cream, charcoal ink, crimson accent; the minimal default), `notebook` (cream page, rounded boxes in rotating pastel fills), `blueprint` (pale ink on deep blue, yellow accent, grid), `botanical` (near-black, gold titles, dusty pink accent) and `terminal` (GitHub dark, green accent, straight strokes, sharp corners, grid).
+All themes use the handwriting font. `paper` (warm cream, charcoal ink, crimson accent; the minimal default), `color` (white, blue titles, slate text, amber accent, light blue boxes), `dark` (light ink on near-black, soft red accent), `notebook` (cream page, rounded boxes in rotating pastel fills), `blueprint` (pale ink on deep blue, yellow accent, grid), `botanical` (near-black, gold titles, dusty pink accent) and `terminal` (GitHub dark, green accent, straight strokes, sharp corners, grid).
 
 
 Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY` for side notes) and the theme remaps them, so any drawing can be re-skinned by changing one argument. A theme sets canvas background, title colour, roughness, and optionally `grid` (wallpaper), `round` (rounded corners), `tint` (one box fill) and `cards` (fills used in turn). To add a theme, add an entry to `THEMES` in `scripts/sketch.py`.
