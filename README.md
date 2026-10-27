@@ -1,6 +1,6 @@
 # sketch-diagram
 
-An agent skill that draws hand-drawn Excalidraw diagrams for Obsidian. The default look is minimal: charcoal ink on cream, one red accent, handwriting font, almost no filled boxes. Nine more themes re-skin the same drawings.
+An agent skill that draws hand-drawn Excalidraw diagrams for Obsidian. The default look is minimal: charcoal ink on cream, one red accent, handwriting font, almost no filled boxes. Four more themes re-skin the same drawings.
 
 Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 
@@ -15,33 +15,21 @@ Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 
 ## Themes
 
-Ten themes in two families. The same drawings work in all of them.
-
-**Hand-drawn** (wobbly strokes, handwriting font)
+Five themes. All use the handwriting font; the same drawings work in each.
 
 | Theme | Look |
 |---|---|
 | `paper` | Warm cream, charcoal ink, one crimson accent (default) |
-| `color` | Blue titles, slate text, amber accent, light blue fill |
-| `dark` | Light ink on near-black, soft red accent |
-| `blueprint` | Pale ink on deep blue, yellow accent |
+| `notebook` | Cream page, rounded boxes in rotating pastel fills |
+| `blueprint` | Pale ink on deep blue, yellow accent, grid wallpaper |
 | `botanical` | Near-black, gold titles, dusty pink accent |
-| `neon` | Navy, cyan titles, magenta accent |
-
-**Clean** (straight strokes, other fonts, sharp or filled shapes)
-
-| Theme | Look |
-|---|---|
-| `terminal` | GitHub dark, monospace font, green accent |
-| `swiss` | White, black, one red, Helvetica, sharp corners |
-| `notebook` | Cream page, Helvetica, rounded boxes in rotating pastel fills |
-| `voltage` | Electric blue, white, neon yellow, Helvetica |
+| `terminal` | GitHub dark, green accent, straight strokes, sharp corners |
 
 Ready-made files for every theme are in [`examples/`](examples/). Open any of them in Obsidian with the Excalidraw plugin.
 
 ```python
 from sketch import Sketch
-s = Sketch(theme="dark")
+s = Sketch(theme="blueprint")
 ```
 
 To add a theme, add an entry to `THEMES` in `skills/sketch-diagram/scripts/sketch.py`.
