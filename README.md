@@ -12,6 +12,7 @@ Output is `.excalidraw.md` (Obsidian Excalidraw plugin) or plain `.excalidraw`.
 - n8n-style node graphs (rounded nodes, labels outside, ports)
 - Slide layouts: checklist, label-and-answer rows, closing line
 - Stat cards, timeline, split panel (title left, content right), notebook tabs, cover with tags
+- Quote, chapter divider, numbered steps, kanban, mind map, before-and-after compare, bird's-eye lanes
 
 ## Themes
 
