@@ -76,6 +76,8 @@ Python 3, standard library only.
 
 The Obsidian file format handling builds on [axtonliu/axton-obsidian-visual-skills](https://github.com/axtonliu/axton-obsidian-visual-skills) (MIT, Axton Liu).
 
+The layouts (stat cards, timeline, kanban, chapter dividers, hard offset shadows, grid wallpaper) follow common slide and web design conventions. No code was copied from other design skills.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
