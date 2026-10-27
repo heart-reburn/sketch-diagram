@@ -1,7 +1,8 @@
 # Changelog
 
 ## Unreleased
-- Five more themes: signal, botanical, terminal, neon, paper.
+- Ten themes in two families, hand-drawn and clean. Clean themes add Helvetica and mono fonts, sharp corners and pastel card fills.
+- Default theme is now `paper` (replaces `ink`).
 
 ## 0.1.0
 - First release: flows, bar charts, comparisons, n8n-style workflow graphs, checklist and summary slides.

@@ -1,18 +1,24 @@
 ---
 name: sketch-diagram
-description: Draw minimalist, hand-drawn Excalidraw diagrams (flows, comparisons, simple charts) as Obsidian .excalidraw.md or plain .excalidraw files. Black ink, one red accent, no filled boxes. Use when asked for an Excalidraw drawing, a sketch-style flow, or a hand-drawn diagram.
+description: Draw minimalist, hand-drawn Excalidraw diagrams (flows, comparisons, simple charts) as Obsidian .excalidraw.md or plain .excalidraw files. Minimal by default (ink, one red accent, no filled boxes) with ten themes, hand-drawn or clean. Use when asked for an Excalidraw drawing, a sketch-style flow, or a hand-drawn diagram.
 ---
 
 # Sketch diagram
 
-Hand-drawn Excalidraw diagrams with swappable themes. The default theme, `ink`, is the minimal one: ink on white, one red accent, plain handwriting, almost no boxes.
+Hand-drawn Excalidraw diagrams with swappable themes. The default theme, `paper`, is the minimal one: ink on cream, one red accent, plain handwriting, almost no boxes.
 
 ## Themes
-`Sketch(theme="ink")` is the default. Others: `color` (blue titles, slate text, amber accent, light blue tint in boxes), `dark` (light ink on near-black, soft red accent), `blueprint` (pale ink on deep blue, yellow accent) `pastel` (cream paper, violet titles, pink accent and tint), `signal` (charcoal with an orange accent), `botanical` (near-black, warm gold titles, dusty pink accent), `terminal` (GitHub dark, green accent, clean lines), `neon` (navy with cyan titles and a magenta accent) and `paper` (warm cream, charcoal ink, crimson accent). Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY` for side notes) and the theme remaps them, so any drawing can be re-skinned by changing one argument. A theme also sets the canvas background, fill tint, title colour and roughness. To add a theme, add an entry to `THEMES` in `scripts/sketch.py`.
+`Sketch(theme="paper")` is the default. Two families share one set of drawings.
+
+Hand-drawn (wobbly strokes, handwriting font): `paper` (warm cream, charcoal ink, crimson accent; the minimal one), `color` (blue titles, slate text, amber accent, light blue boxes), `dark`, `blueprint` (pale ink on deep blue, yellow accent), `botanical` (near-black, gold titles, dusty pink accent) and `neon` (navy, cyan titles, magenta accent).
+
+Clean (straight strokes, other fonts, sharp or filled shapes): `terminal` (GitHub dark, mono font, green accent), `swiss` (white, black, one red, Helvetica, sharp corners), `notebook` (cream page, Helvetica, rounded boxes in rotating pastel fills) and `voltage` (electric blue, white, neon yellow, Helvetica).
+
+Code uses three roles (`INK` for text and lines, `RED` for the one accent, `GREY` for side notes) and the theme remaps them, so any drawing can be re-skinned by changing one argument. A theme sets canvas background, title colour, roughness, and optionally `font`, `round` (rounded corners), `tint` (one box fill) and `cards` (fills used in turn). To add a theme, add an entry to `THEMES` in `scripts/sketch.py`.
 
 
-## Look (ink theme)
-- Ink `#1e1e1e` for everything. Red `#c92a2a` for the one thing that matters. Grey `#868e96` for side notes. No other colours.
+## Look (paper theme)
+- Ink for everything. Red (crimson in this theme) for the one thing that matters. Grey for side notes. No other colours.
 - No filled boxes. Steps are plain text joined by thin arrows. Use a box only for a callout, dashed red for "in progress" or "exception".
 - Headings get an underline stroke, not a box. Subtitles are small and grey.
 - Bars and areas use hachure fill (diagonal hatch). A bar not yet reached is a dashed red outline, empty.
